@@ -1,6 +1,7 @@
 ---
 title: "Assignment 5"
 subtitle: "Due at 11:59pm on November 25."
+author: "Zachary Winograd"
 format: pdf
 editor: visual
 ---
