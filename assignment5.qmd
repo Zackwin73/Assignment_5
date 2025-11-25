@@ -165,7 +165,7 @@ tract_clust <- acs_il_t %>%
 
 Since we want to use K Means in this section, we start by determining the optimal number of K that results in Clusters with low within but high between variation. Plot within cluster sums of squares for a range of K (e.g. up to 20).
 
-```{r}
+```{r, warning=FALSE}
 wss <- numeric(20)
 
 for (k in 1:20) {
