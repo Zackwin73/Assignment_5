@@ -7,7 +7,7 @@ editor: visual
 
 You may work in pairs or individually for this assignment. Make sure you join a group in Canvas if you are working in pairs. Turn in this assignment as an HTML or PDF file to ELMS. Make sure to include the R Markdown or Quarto file that was used to generate it. Include the GitHub link for the repository containing these files.
 
-Github Link:
+Github Link:https://github.com/Zackwin73/Assignment_5
 
 ```{r}
 #| include: false
@@ -99,12 +99,8 @@ county_hc <- hclust(county_dist, method = "ward.D2")
 Plot the dendrogram to find a reasonable number of clusters. Draw boxes around the clusters of your cluster solution.
 
 ```{r}
-
-
 plot(county_hc)        
 rect.hclust(county_hc, k = 4)   
-
-
 ```
 
 Visualize the county clusters on a map. For this task, create a new `acs_map` object that now also includes cluster membership as a new column. This column should be called `cluster`.
@@ -159,16 +155,12 @@ As before, clean our data for clustering census tracts based on population, aver
 
 ```{r}
 
-
-# Clean acs_il_t before creating tract_clust
 acs_il_t <- acs_il_t %>% drop_na(pop, hh_income, income)
 
-# Now create the clustering data
 tract_clust <- acs_il_t %>%
   select(pop, hh_income, income) %>%
   drop_na() %>%
   scale()
-
 
 ```
 
@@ -195,10 +187,9 @@ ggplot(wss_df, aes(x = k, y = wss)) +
 Run `kmeans()` for the optimal number of clusters based on the plot above.
 
 ```{r}
-#| eval: false
 
 
-k_opt <- 5   # choose the K based on your elbow plot
+k_opt <- 5   
 set.seed(123)
 km_tract <- kmeans(tract_clust, centers = k_opt, nstart = 20)
 
@@ -208,10 +199,7 @@ km_tract <- kmeans(tract_clust, centers = k_opt, nstart = 20)
 Find the mean population, household income and per capita income grouped by clusters. In addition, display the most frequent county that can be observed within each cluster.
 
 ```{r}
-#| eval: false
 
-
-# Re-extract county name correctly from NAME
 acs_il_t <- acs_il_t %>%
   mutate(
     county_name = str_extract(NAME, "[^,]+ County") %>% 
@@ -219,10 +207,9 @@ acs_il_t <- acs_il_t %>%
       str_trim()
   )
 
-# Assign cluster labels
 acs_il_t$cluster <- km_tract$cluster
 
-# Cluster summary with correctly extracted counties
+
 cluster_summary <- acs_il_t %>%
   group_by(cluster) %>%
   summarise(
@@ -244,7 +231,6 @@ cluster_summary
 As you might have seen earlier, it's not always clear which number of clusters is the optimal choice. To automate K Means clustering, program a function based on `kmeans()` that takes K as an argument. You can fix the other arguments, e.g. such that a specific dataset is always used when calling the function.
 
 ```{r}
-#| eval: false
 
 run_kmeans <- function(k) {
   set.seed(123)
