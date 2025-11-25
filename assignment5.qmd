@@ -154,7 +154,6 @@ head(acs_il_t)
 As before, clean our data for clustering census tracts based on population, average household income and per capita income.
 
 ```{r}
-
 acs_il_t <- acs_il_t %>% drop_na(pop, hh_income, income)
 
 tract_clust <- acs_il_t %>%
@@ -179,7 +178,6 @@ wss_df <- tibble(k = 1:20, wss = wss)
 ggplot(wss_df, aes(x = k, y = wss)) +
   geom_line() +
   geom_point()
-
 ```
 
 Run `kmeans()` for the optimal number of clusters based on the plot above.
@@ -195,7 +193,6 @@ km_tract
 Find the mean population, household income and per capita income grouped by clusters. In addition, display the most frequent county that can be observed within each cluster.
 
 ```{r}
-
 acs_il_t <- acs_il_t %>%
   mutate(
     county_name = str_extract(NAME, "[^,]+ County") %>% 
@@ -236,18 +233,14 @@ run_kmeans <- function(k) {
 We want to utilize this function to iterate over multiple Ks (e.g., K = 2, ..., 10) and -- each time -- add the resulting cluster membership as a new variable to our (cleaned) original data frame (`acs_il_t`). There are multiple solutions for this task, e.g. think about the `apply` family or `for` loops.
 
 ```{r}
-
 for (k in 2:10) {
   km <- run_kmeans(k)
   acs_il_t[[paste0("cluster_k", k)]] <- km$cluster
 }
-
 ```
 
 Finally, display the first rows of the updated data set (with multiple cluster columns).
 
 ```{r}
 head(acs_il_t)
-
-
 ```
