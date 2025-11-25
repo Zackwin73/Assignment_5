@@ -16,6 +16,7 @@ library(censusapi)
 library(tidyverse)
 library(magrittr)
 library(factoextra)
+library(knitr)
 ```
 
 ## Exploring ACS Data
@@ -235,7 +236,6 @@ run_kmeans <- function(k) {
 We want to utilize this function to iterate over multiple Ks (e.g., K = 2, ..., 10) and -- each time -- add the resulting cluster membership as a new variable to our (cleaned) original data frame (`acs_il_t`). There are multiple solutions for this task, e.g. think about the `apply` family or `for` loops.
 
 ```{r}
-#| eval: false
 
 for (k in 2:10) {
   km <- run_kmeans(k)
@@ -247,7 +247,7 @@ for (k in 2:10) {
 Finally, display the first rows of the updated data set (with multiple cluster columns).
 
 ```{r}
-
 head(acs_il_t)
+
 
 ```
